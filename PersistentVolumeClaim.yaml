@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-volume
+spec:
+  storageClassName: faster
+  accessModes:
+    - ReadWriteMany
+    # since you are copying files, you need write permission.
+  resources:
+    requests:
+      storage: 30Gi

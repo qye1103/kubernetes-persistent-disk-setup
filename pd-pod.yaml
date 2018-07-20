@@ -1,0 +1,28 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: task-pv-pod
+spec:
+  volumes:
+    - name: task-pv-storage
+      persistentVolumeClaim:
+       claimName: my-volume
+  containers:
+    - name: your-image-name
+      image: "your-image-name eg:gcr.io"
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: task-pv-storage
+          subPath: "html"
+# Here is the important thing, you might use a big disk with a lot of other files, 
+# but you only need one of them.
+# here uses subPath.
+# mountPath means the path you are going to put inside the pod container.
+# subPath means the path inside the disk.
+# the important thing is that do not start with "/"
+# For example: if you want to put /a/b to pod container /c
+# mountPath: "/c"
+# subPath: "a/b"
